@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+    <ul class="sub">
+        <li>
+           <form action="" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="p" value="{{ user.username }}"/>
+                <input type="submit"  value="选课">
+            </form>
+        </li>
+        <li>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="q" value="{{ user.username }}"/>
+                <input type="submit"  value="我的课表">
+            </form>
+        </li>
+        <li>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="t" value="{{ user.username }}"/>
+                <input type="submit"  value="退课">
+            </form>
+        </li>
+        <li>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="g" value="{{ user.username }}"/>
+                <input type="submit"  value="查询成绩">
+            </form>
+        </li>
+    </ul>
+
+
+</body>
+</html>

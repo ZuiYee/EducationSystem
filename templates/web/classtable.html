@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ClassTable</title>
+</head>
+<body>
+<div>
+    <a href="{% url 'web:profile' %}">返回首页</a>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>classCode</th>
+            <th>className</th>
+            <th>classTime</th>
+            <th>teacherName</th>
+            <th>address</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%  for item in find %}
+            <tr>
+                <td>{{ item.classCode }}</td>
+                <td>{{ item.className }}</td>
+                <td>{{ item.classTime }}</td>
+                <td>{{ item.teacherName }}</td>
+                <td>{{ item.address }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

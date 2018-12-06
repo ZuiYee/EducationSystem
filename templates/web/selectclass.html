@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SelectClass</title>
+</head>
+<body>
+<div>
+    <a href="{% url 'web:profile' %}">返回首页</a>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>classCode</th>
+            <th>className</th>
+            <th>classTime</th>
+            <th>teacherName</th>
+            <th>address</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%  for item in find %}
+            <tr>
+                <td>{{ item.classCode }}</td>
+                <td>{{ item.className }}</td>
+                <td>{{ item.classTime }}</td>
+                <td>{{ item.teacherName }}</td>
+                <td>{{ item.address }}</td>
+                <td>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="pickCode" value="{{ item.classCode }}"/>
+                        <input type="hidden" name="pickNum" value="{{ user.username }}"/>
+                        <input type="submit" value="选择">
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>
