@@ -6,7 +6,11 @@
 </head>
 <body>
 <div>
-    <a href="{% url 'web:profile' %}">返回首页</a>
+    {% if user.identity == '学生' %}
+        <a href="{% url 'web:studentProfile' %}">返回首页</a>
+    {% elif user.identity == '老师' %}
+        <a href="{% url 'web:teacherProfile' %}">返回首页</a>
+    {% endif %}
 </div>
 <table>
     <thead>

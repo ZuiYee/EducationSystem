@@ -31,8 +31,18 @@ def login(request):
         password = request.POST.get('password')
         re = auth.authenticate(username=username, password=password)
         if re is not None:
-            auth.login(request, re)
-            return redirect('/', {'users': re})
+            identity = request.POST.get('identity')
+            if identity:
+                if re.identity == identity:
+                    auth.login(request, re)
+                    if request.POST.get('identity') == '学生':
+                        return render(request, 'users/studentsuser.html', {'users': re})
+                    else:
+                        return render(request, 'users/teacheruser.html', {'users': re})
+                else:
+                    return render(request, 'users/login.html', {'LoginError': '身份选择错误'})
+            else:
+                return render(request, 'users/login.html', {'LoginError': '请选择身份'})
         else:
             return render(request, 'users/login.html', {'LoginError': '用户名或密码错误'})
     return render(request, 'users/login.html')

@@ -2,9 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Profile</title>
+    <title>studentProfile</title>
 </head>
 <body>
+    <a href="{% url 'web:studentProfile' %}">
+        {{ user.name }}
+    </a>
+    <a href="{% url 'logout' %}?next={{ request.path }}">
+        <button class="btn btn-warning">
+        退出
+        </button>
+    </a>
     <ul class="sub">
         <li>
            <form action="" method="POST">

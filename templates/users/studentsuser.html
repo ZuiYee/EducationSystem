@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student</title>
+</head>
+<body>
+    <a href="{% url 'web:studentProfile' %}">{{ user.name }}的主页</a>
+        <a href="{% url 'logout' %}?next={{ request.path }}">
+            <button class="btn btn-warning">
+            退出
+            </button>
+        </a>
+</body>
+</html>

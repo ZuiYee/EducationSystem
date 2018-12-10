@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect
-from .models import ClassTable, Class, Grade
+from .models import ClassTable, Class, Grade, Teacher, Student
 from django.db.models import Q
 
-def GetClassTable(request, studentNum):
+def GetStudentClassTable(request, studentNum):
     context = {}
     findPart = ClassTable.objects.filter(studentNum=studentNum).values_list('classCode', flat=True)
     find = Class.objects.filter(classCode__in=findPart).values()
@@ -15,8 +15,8 @@ def GetClassTable(request, studentNum):
 
 def SelectClassWeb(request, studentNum):
     context = {}
-    findPart = ClassTable.objects.filter(~Q(studentNum=studentNum)).values_list('classCode', flat=True)
-    find = Class.objects.filter(classCode__in=findPart).values()
+    findPart = ClassTable.objects.filter(studentNum=studentNum).values_list('classCode', flat=True)
+    find = Class.objects.filter(~Q(classCode__in=findPart)).values()
     if find:
         context['find'] = find
         return render(request, 'web/selectclass.html', context)
@@ -46,17 +46,16 @@ def SelectClass(request, classCode, studentNum):
             studentNum=studentNum
         )
         print("Add Successfully!")
-        return render(request, 'web/profile.html')
+        return render(request, 'web/studentProfile.html')
     else:
         print("No theClass!")
 
 def DropClass(request, classCode, studentNum):
     ClassTable.objects.filter(classCode=classCode, studentNum=studentNum).delete()
     print("Drop Successfully!")
-    return render(request, 'web/profile.html')
+    return render(request, 'web/studentProfile.html')
 
 def GetGrade(request ,studentNum):
-    print(studentNum)
     context = {}
     Num = Grade.objects.filter(studentNum=studentNum)
     theClassPart = ClassTable.objects.filter(studentNum=studentNum).values_list('classCode', flat=True)
@@ -69,10 +68,10 @@ def GetGrade(request ,studentNum):
 
     return render(request, 'web/grade.html')
 
-def profile(request):
+def studentProfile(request):
     if request.method == "POST":
         if request.POST.get("q"):
-            return GetClassTable(request, request.POST.get("q"))
+            return GetStudentClassTable(request, request.POST.get("q"))
         if request.POST.get("p"):
             return SelectClassWeb(request, request.POST.get("p"))
         if request.POST.get("t"):
@@ -85,4 +84,55 @@ def profile(request):
             return DropClass(request, request.POST.get("dropCode"), request.POST.get("dropNum"))
 
 
-    return render(request, 'web/profile.html')
+    return render(request, 'web/studentProfile.html')
+
+
+
+def GetTeacherClassTable(request,teacherNum):
+    context = {}
+    teacher = Teacher.objects.filter(teacherNum=teacherNum)
+    if teacher:
+        find = Class.objects.filter(teacherName=teacher[0].teacherName)
+        if find:
+            context['find'] = find
+            return render(request, 'web/classtable.html', context)
+        else:
+            print('No the studentNumber!')
+            return render(request, 'web/error.html')
+
+def UpdateGrade(request, teacherNum):
+    context = {}
+    teacher = Teacher.objects.filter(teacherNum=teacherNum)
+    if teacher:
+        find = ClassTable.objects.filter(teacherName=teacher[0].teacherName)
+        if find:
+            for item in find:
+                gradeList = Grade.objects.filter(studentNum=item.studentNum)
+                if gradeList:
+                    item.Grade = gradeList[0].Grade
+            context['find'] = find
+            return render(request, 'web/updateGrade.html', context)
+        else:
+            print('No the studentNumber!')
+            return render(request, 'web/error.html')
+
+def Update(request):
+    studentNum = request.POST.get("updateNum")
+    classCode = request.POST.get("updateCode")
+    grade = Grade.objects.filter(studentNum=studentNum, classCode=classCode)
+    if grade:
+        grade.update(Grade=request.POST.get("g"))
+    return render(request, 'web/teacherProfile.html')
+
+def teacherProfile(request):
+    if request.method == "POST":
+        if request.POST.get("q"):
+            return GetTeacherClassTable(request, request.POST.get("q"))
+        if request.POST.get("c"):
+            return UpdateGrade(request, request.POST.get("c"))
+        if request.POST.get("g"):
+            return Update(request)
+
+
+
+    return render(request, 'web/teacherProfile.html')

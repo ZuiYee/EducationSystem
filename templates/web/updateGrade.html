@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UpdataGrade</title>
+</head>
+<body>
+<div>
+    <a href="{% url 'web:teacherProfile' %}">返回首页</a>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>classCode</th>
+            <th>className</th>
+            <th>studentNum</th>
+            <th>grade</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%  for item in find %}
+            <tr>
+                <td>{{ item.classCode }}</td>
+                <td>{{ item.className }}</td>
+                <td>{{ item.studentNum }}</td>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <td>
+                        <input type="text" name="g" value="{{ item.Grade }}"/>
+                    </td>
+                    <td>
+                        <input type="hidden" name="updateCode" value="{{ item.classCode }}"/>
+                        <input type="hidden" name="updateNum" value="{{ item.studentNum }}"/>
+                        <input type="submit" value="选择">
+                    </td>
+                </form>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>
