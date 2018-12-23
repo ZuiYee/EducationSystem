@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from .models import ClassTable, Class, Grade, Teacher, Student
 from django.db.models import Q
+from user.views import UpdateInformations
+
 
 def GetStudentClassTable(request, studentNum):
     context = {}
@@ -124,8 +126,14 @@ def Update(request):
         grade.update(Grade=request.POST.get("g"))
     return render(request, 'web/teacherProfile.html')
 
+
+
+
+
 def teacherProfile(request):
     if request.method == "POST":
+        if request.POST.get("x"):
+            return UpdateInformations(request, request.POST.get("x"))
         if request.POST.get("q"):
             return GetTeacherClassTable(request, request.POST.get("q"))
         if request.POST.get("c"):

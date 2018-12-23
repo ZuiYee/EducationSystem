@@ -1,4 +1,6 @@
-from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect, reverse, get_object_or_404
+
 from .forms import RegisterForm
 from django.contrib.auth.models import User
 from django.contrib import auth
@@ -36,9 +38,9 @@ def login(request):
                 if re.identity == identity:
                     auth.login(request, re)
                     if request.POST.get('identity') == '学生':
-                        return render(request, 'users/studentsuser.html', {'users': re})
+                        return redirect(reverse('web:studentProfile'))
                     else:
-                        return render(request, 'users/teacheruser.html', {'users': re})
+                        return redirect(reverse('web:teacherProfile'))
                 else:
                     return render(request, 'users/login.html', {'LoginError': '身份选择错误'})
             else:
@@ -53,7 +55,11 @@ def logout(request):
     return render(request, 'index.html')
 
 
-def profile(request):
-    return render(request, 'web/profile.html', )
-
-
+def UpdateInformations(request, username):
+    user = request.user
+    # print(user.identity)
+    # form = RegisterForm()
+    # user = get_object_or_404(User, username=username)
+    # form = RegisterForm(request.POST)
+    return render(request, 'users/UpdataInfomations.html')
+    # if form.is_valid():

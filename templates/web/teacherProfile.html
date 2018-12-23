@@ -17,6 +17,13 @@
         <li>
             <form action="" method="POST">
                 {% csrf_token %}
+                <input type="hidden" name="x" value="{{ user.username }}"/>
+                <input type="submit"  value="修改信息">
+            </form>
+        </li>
+        <li>
+            <form action="" method="POST">
+                {% csrf_token %}
                 <input type="hidden" name="q" value="{{ user.username }}"/>
                 <input type="submit"  value="我的课表">
             </form>

@@ -24,6 +24,5 @@ urlpatterns = [
     url(r'^user/', include('user.urls')),
     url(r'^user/', include('django.contrib.auth.urls')),
     url(r'^$', view.index, name='index'),
-    url(r'^profile/', view.profile, name='profile'),
     url(r'^web/', include('web.urls')),
 ]
