@@ -47,14 +47,13 @@ def SelectClass(request, classCode, studentNum):
             studentNum=studentNum
         )
         print("Add Successfully!")
-        return render(request, 'web/studentProfile.html')
+        return render(request, 'web/studentparseresult.html', {'Print': '选课成功!'})
     else:
-        print("No theClass!")
+        return render(request, 'web/studentparseresult.html', {'Print': '选课失败!课程不存在'})
 
 def DropClass(request, classCode, studentNum):
     ClassTable.objects.filter(classCode=classCode, studentNum=studentNum).delete()
-    print("Drop Successfully!")
-    return render(request, 'web/studentProfile.html')
+    return render(request, 'web/studentparseresult.html', {'Print': '退课成功!'})
 
 def GetGrade(request ,studentNum):
     context = {}
@@ -65,8 +64,6 @@ def GetGrade(request ,studentNum):
     if find:
         context['find'] = find
         return render(request, 'web/grade.html', context)
-
-
     return render(request, 'web/grade.html')
 
 def studentProfile(request):
@@ -123,7 +120,7 @@ def Update(request):
     grade = Grade.objects.filter(studentNum=studentNum, classCode=classCode)
     if grade:
         grade.update(Grade=request.POST.get("g"))
-    return render(request, 'web/teacherProfile.html')
+    return render(request, 'web/teacherparseresult.html', context={'Print': '上传成绩成功!'})
 
 
 
@@ -138,3 +135,9 @@ def teacherProfile(request):
         if request.POST.get("g"):
             return Update(request)
     return render(request, 'web/teacherProfile.html')
+
+def studentparseresult(request):
+    return render(request, 'web/studentparseresult.html')
+
+def teacherparseresult(request):
+    return render(request, 'web/teacherparseresult.html')

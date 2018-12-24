@@ -11,7 +11,6 @@ class User(AbstractUser):
     identity = models.CharField('身份', max_length=20, blank=True)
     department = models.CharField('院系', max_length=50, blank=True)
 
-
     class Meta(AbstractUser.Meta):
         pass
 

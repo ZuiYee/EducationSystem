@@ -64,7 +64,7 @@ def teacherchange(request):
         form = UserForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect(reverse('web:teacherProfile'))
+            return render(request, 'web/teacherparseresult.html', context={'Print': '更改信息已保存!'})
 
     context = {'form': form}
     return render(request, 'users/teacherchange.html', context)
@@ -76,10 +76,8 @@ def studentchange(request):
         form = UserForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect(reverse('web:studentProfile'))
-
-    context = {'form': form}
-    return render(request, 'users/studentchange.html', context)
+            return render(request, 'web/studentparseresult.html', context={'Print': '更改信息已保存!'})
+    return render(request, 'users/studentchange.html', context={'form': form})
 
 def studentchangepassword(request):
     if request.method == 'GET':
@@ -88,6 +86,7 @@ def studentchangepassword(request):
         form = RegisterForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
+            return render(request, 'web/studentparseresult.html', context={'Print': '更改密码已保存!'})
     return render(request, 'users/studentchangepassword.html', context={'form': form})
 
 def teacherchangepassword(request):
@@ -97,4 +96,5 @@ def teacherchangepassword(request):
         form = RegisterForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
+            return render(request, 'web/teacherparseresult.html', context={'Print': '更改密码已保存!'})
     return render(request, 'users/teacherchangepassword.html', context={'form': form})
