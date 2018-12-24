@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 
-from .forms import RegisterForm
+from .forms import RegisterForm, UserForm
 from django.contrib.auth.models import User
 from django.contrib import auth
 
@@ -55,11 +55,46 @@ def logout(request):
     return render(request, 'index.html')
 
 
-def UpdateInformations(request, username):
-    user = request.user
-    # print(user.identity)
-    # form = RegisterForm()
-    # user = get_object_or_404(User, username=username)
-    # form = RegisterForm(request.POST)
-    return render(request, 'users/UpdataInfomations.html')
-    # if form.is_valid():
+
+
+def teacherchange(request):
+    if request.method == 'GET':
+        form = UserForm(instance=request.user)
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('web:teacherProfile'))
+
+    context = {'form': form}
+    return render(request, 'users/teacherchange.html', context)
+
+def studentchange(request):
+    if request.method == 'GET':
+        form = UserForm(instance=request.user)
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('web:studentProfile'))
+
+    context = {'form': form}
+    return render(request, 'users/studentchange.html', context)
+
+def studentchangepassword(request):
+    if request.method == 'GET':
+        form = RegisterForm(instance=request.user)
+    if request.method == 'POST':
+        form = RegisterForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+    return render(request, 'users/studentchangepassword.html', context={'form': form})
+
+def teacherchangepassword(request):
+    if request.method == 'GET':
+        form = RegisterForm(instance=request.user)
+    if request.method == 'POST':
+        form = RegisterForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+    return render(request, 'users/teacherchangepassword.html', context={'form': form})

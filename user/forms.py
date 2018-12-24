@@ -10,7 +10,11 @@ class RegisterForm(UserCreationForm):
         fields = ('username', 'name', 'user_number', 'identity')
 
 
-
+class UserForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = (
+            'user_number', 'name', 'department', 'password', 'identity')
 
 
 
