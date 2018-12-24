@@ -15,6 +15,13 @@
     </a>
     <ul class="sub">
         <li>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="c" value="{{ user.username }}"/>
+                <input type="submit"  value="我的课表">
+            </form>
+        </li>
+        <li>
             <a href="{% url 'users:studentchangepassword' %}">
                 <button>修改密码</button>
             </a>
@@ -35,7 +42,7 @@
             <form action="" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="q" value="{{ user.username }}"/>
-                <input type="submit"  value="我的课表">
+                <input type="submit"  value="我的选课">
             </form>
         </li>
         <li>

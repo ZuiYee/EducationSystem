@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>我的课表</title>
+</head>
+<body>
+<h1>我的课表</h1>
+<table id="Table1" class="blacktab" bordercolor="Black" border="0" width="100%">
+	<tbody>
+    <tr>
+		<td colspan="2" rowspan="1" width="2%">时间</td>
+        <td align="Center" width="14%">星期一</td>
+        <td align="Center" width="14%">星期二</td>
+        <td align="Center" width="14%">星期三</td>
+        <td align="Center" width="14%">星期四</td>
+        <td align="Center" width="14%">星期五</td>
+        <td class="noprint" align="Center" width="14%">星期六</td>
+        <td class="noprint" align="Center" width="14%">星期日</td>
+	</tr>
+    <tr>
+		<td rowspan="4" width="1%">上午</td>
+        <td width="1%">第1节</td>
+        {% for item in find %}
+            {% if item.weekday == '一' %}
+                {% if item.daytime == '1,2' %}
+                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
+                {% else %}
+                    <td align="Center" width="7%">&nbsp;</td>
+                {% endif %}
+            {% else %}
+                <td align="Center" width="7%">&nbsp;</td>
+            {% endif %}
+        {% endfor %}
+        {% for item in find %}
+            {% if item.weekday == '二' %}
+                {% if item.daytime == '1,2' %}
+                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
+                {% else %}
+                    <td align="Center" width="7%">&nbsp;</td>
+                {% endif %}
+            {% else %}
+                <td align="Center" width="7%">&nbsp;</td>
+            {% endif %}
+        {% endfor %}
+        {% for item in find %}
+            {% if item.weekday == '三' %}
+                {% if item.daytime == '1,2' %}
+                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
+                {% else %}
+                    <td align="Center" width="7%">&nbsp;</td>
+                {% endif %}
+            {% else %}
+                <td align="Center" width="7%">&nbsp;</td>
+            {% endif %}
+        {% endfor %}
+        {% for item in find %}
+            {% if item.weekday == '四' %}
+                {% if item.daytime == '1,2' %}
+                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
+                {% else %}
+                    <td align="Center" width="7%">&nbsp;</td>
+                {% endif %}
+            {% else %}
+                <td align="Center" width="7%">&nbsp;</td>
+            {% endif %}
+        {% endfor %}
+        {% for item in find %}
+            {% if item.weekday == '五' %}
+                {% if item.daytime == '1,2' %}
+                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
+                {% else %}
+                    <td align="Center" width="7%">&nbsp;</td>
+                {% endif %}
+            {% else %}
+                <td align="Center" width="7%">&nbsp;</td>
+            {% endif %}
+        {% endfor %}
+        {% for item in find %}
+            {% if item.weekday == '六' %}
+                {% if item.daytime == '1,2' %}
+                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
+                {% else %}
+                    <td align="Center" width="7%">&nbsp;</td>
+                {% endif %}
+            {% else %}
+                <td align="Center" width="7%">&nbsp;</td>
+            {% endif %}
+        {% endfor %}
+        {% for item in find %}
+            {% if item.weekday == '日' %}
+                {% if item.daytime == '1,2' %}
+                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
+                {% else %}
+                    <td align="Center" width="7%">&nbsp;</td>
+                {% endif %}
+            {% else %}
+                <td align="Center" width="7%">&nbsp;</td>
+            {% endif %}
+        {% endfor %}
+	</tr>
+    <tr>
+		<td>第2节</td>
+        <td align="Center">&nbsp;</td>
+        <td align="Center">&nbsp;</td>
+        <td class="noprint" align="Center">&nbsp;</td>
+        <td class="noprint" align="Center">&nbsp;</td>
+	</tr>
+    <tr>
+		<td>第3节</td><td align="Center">&nbsp;</td>
+        <td align="Center">操作系统<br>周二第3节{第1-18周}<br>赵鹏<br>博学北楼B106<br>2019年01月11日(16:00-18:00)<br>博学南楼B209</td>
+        <td align="Center" rowspan="2">网络原理实验<br>周三第3,4节{第1-17周|单周}<br>韩莉<br>计算机与网络应用实验教学中心</td>
+        <td align="Center">&nbsp;</td>
+        <td align="Center">&nbsp;</td><td class="noprint" align="Center">&nbsp;</td><td class="noprint" align="Center">&nbsp;</td>
+	</tr>
+    <tr>
+		<td>第4节</td>
+        <td align="Center">&nbsp;</td>
+        <td align="Center">&nbsp;</td>
+        <td align="Center">&nbsp;</td>
+        <td align="Center">&nbsp;</td>
+        <td class="noprint" align="Center">&nbsp;</td>
+        <td class="noprint" align="Center">&nbsp;</td>
+	</tr>
+    <tr>
+		<td rowspan="4" width="1%">下午</td>
+        <td>第5节</td><td align="Center" rowspan="2">软件工程概论<br>周一第5,6节{第1-18周}<br>徐怡<br>博学北楼B203</td>
+        <td align="Center" rowspan="2">网络原理<br>周二第5,6节{第1-18周}<br>韩莉<br>博学北楼B106<br>2019年01月08日(16:00-18:00)<br>博学北楼B205</td>
+        <td align="Center" rowspan="2">Socket编程实验<br>周三第5,6节{第8-16周}<br>张超<br>笃南A208软件工程实验室一</td>
+        <td align="Center" rowspan="2">数据库原理课程设计<br>周四第5,6节{第1-9周}<br>汪粼波<br>笃南A208软件工程实验室一<br><br>操作系统实验<br>周四第5,6节{第10-18周}<br>赵鹏<br>笃南A208软件工程实验室一</td>
+        <td align="Center" rowspan="2">人工智能<br>周五第5,6节{第1-14周}<br>严远亭<br>博学北楼B103</td><td class="noprint" align="Center">&nbsp;</td><td class="noprint" align="Center">&nbsp;</td>
+	</tr>
+    <tr>
+		<td>第6节</td>
+        <td class="noprint" align="Center">&nbsp;</td>
+        <td class="noprint" align="Center">&nbsp;</td>
+	</tr>
+    <tr>
+		<td>第7节</td>
+        <td align="Center" rowspan="2">软件工程概论实验<br>周一第7,8节{第1-18周}<br>徐怡<br>笃南A208软件工程实验室一</td>
+        <td align="Center">网络原理<br>周二第7节{第1-18周}<br>韩莉<br>博学北楼B106<br>2019年01月08日(16:00-18:00)<br>博学北楼B205</td>
+        <td align="Center" rowspan="2">Socket编程实验<br>周三第7,8节{第8-16周}<br>张超<br>笃南A208软件工程实验室一</td>
+        <td align="Center" rowspan="2">数据库原理课程设计<br>周四第7,8节{第1-9周}<br>汪粼波<br>笃南A208软件工程实验室一<br><br>操作系统实验<br>周四第7,8节{第10-18周}<br>赵鹏<br>笃南A208软件工程实验室一</td>
+        <td align="Center">&nbsp;</td>
+        <td class="noprint" align="Center">&nbsp;</td><td class="noprint" align="Center">&nbsp;</td>
+	</tr>
+    <tr>
+		<td>第8节</td><td align="Center">&nbsp;</td><td align="Center">&nbsp;</td><td class="noprint" align="Center">&nbsp;</td><td class="noprint" align="Center">&nbsp;</td>
+	</tr>
+    <tr>
+		<td rowspan="3" width="1%">晚上</td><td>第9节</td><td align="Center">&nbsp;</td><td align="Center" rowspan="3">信号与系统<br>周二第9,10,11节{第1-18周}<br>陶亮<br>博学北楼B303</td><td align="Center" rowspan="3">老年社会工作<br>周三第9,10,11节{第1-12周}<br>黄祖宏/熊凤水<br>博学北楼B102</td><td align="Center" rowspan="3">专业英语<br>周四第9,10,11节{第1-12周}<br>涂铮铮<br>博学北楼B106</td><td align="Center">&nbsp;</td><td class="noprint" align="Center">&nbsp;</td><td class="noprint" align="Center" rowspan="3">毛泽东思想和中国特色社会主义理论体系概论（下）<br>周日第9,10,11节{第1-1周}<br>田九霞<br>自主安排</td>
+	</tr>
+    <tr>
+		<td>第10节</td><td align="Center">&nbsp;</td><td align="Center">&nbsp;</td><td class="noprint" align="Center">&nbsp;</td>
+	</tr>
+    <tr>
+		<td>第11节</td><td align="Center">&nbsp;</td><td align="Center">&nbsp;</td><td class="noprint" align="Center">&nbsp;</td>
+	</tr>
+</tbody></table>
+</body>
+</html>

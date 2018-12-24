@@ -8,6 +8,10 @@
 <div>
     <a href="{% url 'web:studentProfile' %}">返回首页</a>
 </div>
-<h2>{{ Print }}</h2>
+{% if Print %}
+    <h2>{{ Print }}</h2>
+{% else %}
+    <h2>没有数据!</h2>
+{% endif %}
 </body>
 </html>

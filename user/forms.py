@@ -7,7 +7,7 @@ from django import forms
 class RegisterForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('username', 'name', 'user_number', 'identity')
+        fields = ('username', 'name', 'user_number', 'identity', 'department')
 
 
 class UserForm(UserChangeForm):

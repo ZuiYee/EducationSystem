@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import ClassTable, Class, Grade, Teacher, Student
 from django.db.models import Q
-
+import re
 
 def GetStudentClassTable(request, studentNum):
     context = {}
@@ -11,8 +11,7 @@ def GetStudentClassTable(request, studentNum):
         context['find'] = find
         return render(request, 'web/classtable.html', context)
     else:
-        print('No the studentNumber!')
-        return render(request, 'web/error.html')
+        return render(request, 'web/studentparseresult.html', {'Print': '没有数据!'})
 
 def SelectClassWeb(request, studentNum):
     context = {}
@@ -22,8 +21,7 @@ def SelectClassWeb(request, studentNum):
         context['find'] = find
         return render(request, 'web/selectclass.html', context)
     else:
-        print('No the studentNumber!')
-        return render(request, 'web/error.html')
+        return render(request, 'web/studentparseresult.html', {'Print': '没有数据!'})
 
 
 def DropClassWeb(request, studentNum):
@@ -34,8 +32,7 @@ def DropClassWeb(request, studentNum):
         context['find'] = find
         return render(request, 'web/dropclass.html', context)
     else:
-        print('No the studentNumber!')
-        return render(request, 'web/error.html')
+        return render(request, 'web/studentparseresult.html', {'Print': '没有数据!'})
 
 def SelectClass(request, classCode, studentNum):
     theClass = Class.objects.filter(classCode=classCode)[0]
@@ -46,7 +43,6 @@ def SelectClass(request, classCode, studentNum):
             teacherName=theClass.teacherName,
             studentNum=studentNum
         )
-        print("Add Successfully!")
         return render(request, 'web/studentparseresult.html', {'Print': '选课成功!'})
     else:
         return render(request, 'web/studentparseresult.html', {'Print': '选课失败!课程不存在'})
@@ -58,16 +54,44 @@ def DropClass(request, classCode, studentNum):
 def GetGrade(request ,studentNum):
     context = {}
     Num = Grade.objects.filter(studentNum=studentNum)
-    theClassPart = ClassTable.objects.filter(studentNum=studentNum).values_list('classCode', flat=True)
-    theClass = Class.objects.filter(classCode__in=theClassPart).values()
-    find = zip(Num, theClass)
-    if find:
-        context['find'] = find
-        return render(request, 'web/grade.html', context)
-    return render(request, 'web/grade.html')
+    if Num:
+        theClassPart = ClassTable.objects.filter(studentNum=studentNum).values_list('classCode', flat=True)
+        theClass = Class.objects.filter(classCode__in=theClassPart).values()
+        find = zip(Num, theClass)
+        if find:
+            context['find'] = find
+            return render(request, 'web/grade.html', context)
+    return render(request, 'web/studentparseresult.html', {'Print': '没有数据!'})
+
+def Myclass(request, usernum):
+    context = {}
+    findPart = ClassTable.objects.filter(studentNum=usernum).values_list('classCode', flat=True)
+    find = Class.objects.filter(classCode__in=findPart).values()
+    for item in find:
+        if item['classTime']:
+            beginweek = re.findall('{第(.*?)-',item['classTime'])[0]
+            endweek = re.findall('-(.*?)周}',item['classTime'])[0]
+            weekday = re.findall('周(.*?)第', item['classTime'])[0]
+            daytime = re.findall('第(.*?)节', item['classTime'])[0]
+            item['beginweek'] = beginweek
+            item['endweek'] = endweek
+            item['weekday'] = weekday
+            item['daytime'] = daytime
+
+            # data = {
+            #     'beginweek': beginweek,
+            #     'endweek': endweek,
+            #     'weekday': weekday,
+            #     'daytime': daytime
+            # }
+            # print(data)
+    context['find'] =find
+    return render(request, 'web/myclass.html', context)
 
 def studentProfile(request):
     if request.method == "POST":
+        if request.POST.get("c"):
+            return Myclass(request, request.POST.get("c"))
         if request.POST.get("q"):
             return GetStudentClassTable(request, request.POST.get("q"))
         if request.POST.get("p"):
@@ -95,32 +119,39 @@ def GetTeacherClassTable(request,teacherNum):
             context['find'] = find
             return render(request, 'web/classtable.html', context)
         else:
-            print('No the studentNumber!')
-            return render(request, 'web/error.html')
+            return render(request, 'web/teacherparseresult.html', {'Print': '没有数据!'})
 
 def UpdateGrade(request, teacherNum):
     context = {}
     teacher = Teacher.objects.filter(teacherNum=teacherNum)
     if teacher:
         find = ClassTable.objects.filter(teacherName=teacher[0].teacherName)
+
         if find:
             for item in find:
                 gradeList = Grade.objects.filter(studentNum=item.studentNum)
                 if gradeList:
                     item.Grade = gradeList[0].Grade
+                else:
+                    return render(request, 'web/teacherparseresult.html', {'Print': '没有数据!'})
             context['find'] = find
             return render(request, 'web/updateGrade.html', context)
         else:
-            print('No the studentNumber!')
-            return render(request, 'web/error.html')
+            return render(request, 'web/teacherparseresult.html', {'Print': '没有数据!'})
+    else:
+        return render(request, 'web/teacherparseresult.html', {'Print': '没有数据!'})
 
 def Update(request):
     studentNum = request.POST.get("updateNum")
-    classCode = request.POST.get("updateCode")
-    grade = Grade.objects.filter(studentNum=studentNum, classCode=classCode)
-    if grade:
-        grade.update(Grade=request.POST.get("g"))
-    return render(request, 'web/teacherparseresult.html', context={'Print': '上传成绩成功!'})
+    if studentNum:
+        classCode = request.POST.get("updateCode")
+        grade = Grade.objects.filter(studentNum=studentNum, classCode=classCode)
+        if grade:
+            grade.update(Grade=request.POST.get("g"))
+        else:
+            Grade.objects.create(studentNum=studentNum, classCode=classCode, Grade=request.POST.get("g"))
+        return render(request, 'web/teacherparseresult.html', context={'Print': '上传成绩成功!'})
+    return render(request, 'web/teacherparseresult.html', {'Print': '没有数据!'})
 
 
 
