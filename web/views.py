@@ -85,6 +85,16 @@ def Myclass(request, usernum):
             #     'daytime': daytime
             # }
             # print(data)
+    class_list = ['1', '3', '5', '7', '9']
+    week_list = ['一', '二', '三', '四', '五', '六', '日']
+    realfind = {}
+    for a in class_list:
+        for b in week_list:
+            for i in find:
+                if i['weekday'] == b and i['']:
+                    realfind[a][b] =
+
+
     context['find'] =find
     return render(request, 'web/myclass.html', context)
 
