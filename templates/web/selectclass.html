@@ -9,6 +9,22 @@
     <a href="{% url 'web:studentProfile' %}">返回首页</a>
 </div>
 <h1>选课</h1>
+<div>
+    <p>
+    <form action="" method="post">
+        {% csrf_token %}
+        搜索课程:
+        <input name="s" type="text" class="text"  placeholder="Search..">
+        <input type="hidden" name="searchname" value="{{ user.username }}"/>
+        <input  type="submit" value="搜索">
+    </form>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="p" value="{{ user.username }}"/>
+        <input type="submit"  value="全部课程">
+    </form>
+    </p>
+</div>
 <table border="1" width="100%">
     <thead>
         <tr>
