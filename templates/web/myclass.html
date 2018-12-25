@@ -5,6 +5,13 @@
     <title>我的课表</title>
 </head>
 <body>
+<div>
+    {% if user.identity == '学生' %}
+        <a href="{% url 'web:studentProfile' %}">返回首页</a>
+    {% elif user.identity == '老师' %}
+        <a href="{% url 'web:teacherProfile' %}">返回首页</a>
+    {% endif %}
+</div>
 <h1>我的课表</h1>
 <table  border="1" width="100%">
 	<tbody>
@@ -21,441 +28,359 @@
     <tr>
 		<td rowspan="4" width="1%">上午</td>
         <td width="1%">第1节</td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '一' %}
                 {% if item.daytime == '1,2' or item.daytime == '1,2,3' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '二' %}
                 {% if item.daytime == '1,2' or item.daytime == '1,2,3' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '三' %}
                 {% if item.daytime == '1,2' or item.daytime == '1,2,3' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '四' %}
                 {% if item.daytime == '1,2' or item.daytime == '1,2,3' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '五' %}
                 {% if item.daytime == '1,2' or item.daytime == '1,2,3' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '六' %}
                 {% if item.daytime == '1,2' or item.daytime == '1,2,3' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
-            {% if item.weekday == '日' %}
+            {% if item.weekday == '七' %}
                 {% if item.daytime == '1,2' or item.daytime == '1,2,3' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
 	</tr>
     <tr>
 		<td>第2节</td>
-        <td align="Center">&nbsp;</td>
-        <td align="Center">&nbsp;</td>
-        <td class="noprint" align="Center">&nbsp;</td>
-        <td class="noprint" align="Center">&nbsp;</td>
 	</tr>
     <tr>
-		<td>第3节</td><td align="Center">&nbsp;</td>
+		<td>第3节</td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '一' %}
                 {% if item.daytime == '3,4' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '二' %}
                 {% if item.daytime == '3,4' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '三' %}
                 {% if item.daytime == '3,4' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '四' %}
                 {% if item.daytime == '3,4' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '五' %}
                 {% if item.daytime == '3,4' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '六' %}
                 {% if item.daytime == '3,4' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '日' %}
                 {% if item.daytime == '3,4' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
 	</tr>
     <tr>
 		<td>第4节</td>
-        <td align="Center">&nbsp;</td>
-        <td align="Center">&nbsp;</td>
-        <td align="Center">&nbsp;</td>
-        <td align="Center">&nbsp;</td>
-        <td class="noprint" align="Center">&nbsp;</td>
-        <td class="noprint" align="Center">&nbsp;</td>
 	</tr>
     <tr>
 		<td rowspan="4" width="1%">下午</td>
         <td>第5节</td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '一' %}
                 {% if item.daytime == '5,6' or item.daytime == '5,6,7' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '二' %}
-                {{% if item.daytime == '5,6' or item.daytime == '5,6,7' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                {% if item.daytime == '5,6' or item.daytime == '5,6,7' %}
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '三' %}
                 {% if item.daytime == '5,6' or item.daytime == '5,6,7' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '四' %}
                 {% if item.daytime == '5,6' or item.daytime == '5,6,7' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '五' %}
                 {% if item.daytime == '5,6' or item.daytime == '5,6,7' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '六' %}
                 {% if item.daytime == '5,6' or item.daytime == '5,6,7' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '日' %}
                 {% if item.daytime == '5,6' or item.daytime == '5,6,7' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
 	</tr>
     <tr>
 		<td>第6节</td>
-        <td class="noprint" align="Center">&nbsp;</td>
-        <td class="noprint" align="Center">&nbsp;</td>
 	</tr>
     <tr>
 		<td>第7节</td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '一' %}
                 {% if item.daytime == '7,8' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '二' %}
                 {% if item.daytime == '7,8' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '三' %}
                 {% if item.daytime == '7,8' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '四' %}
                 {% if item.daytime == '7,8' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '五' %}
                 {% if item.daytime == '7,8' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
             {% if item.weekday == '六' %}
                 {% if item.daytime == '7,8' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="2" width="7%">
         {% for item in find %}
-            {% if item.weekday == '日' %}
+            {% if item.weekday == '七' %}
                 {% if item.daytime == '7,8' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
 	</tr>
 
 
     <tr>
-		<td>第8节</td><td align="Center">&nbsp;</td><td align="Center">&nbsp;</td><td class="noprint" align="Center">&nbsp;</td><td class="noprint" align="Center">&nbsp;</td>
+		<td>第8节</td>
 	</tr>
 
     <tr>
 		<td rowspan="3" width="1%">晚上</td>
         <td>第9节</td>
+        <td align="Center" rowspan="3" width="7%">
         {% for item in find %}
             {% if item.weekday == '一' %}
                 {% if item.daytime == '9,10' or item.daytime == '9,10,11' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="3" width="7%">
         {% for item in find %}
             {% if item.weekday == '二' %}
                 {% if item.daytime == '9,10' or item.daytime == '9,10,11' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="3" width="7%">
         {% for item in find %}
             {% if item.weekday == '三' %}
                 {% if item.daytime == '9,10' or item.daytime == '9,10,11' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="3" width="7%">
         {% for item in find %}
             {% if item.weekday == '四' %}
                 {% if item.daytime == '9,10' or item.daytime == '9,10,11' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="3" width="7%">
         {% for item in find %}
             {% if item.weekday == '五' %}
                 {% if item.daytime == '9,10' or item.daytime == '9,10,11' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="3" width="7%">
         {% for item in find %}
             {% if item.weekday == '六' %}
                 {% if item.daytime == '9,10' or item.daytime == '9,10,11' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+        <td align="Center" rowspan="3" width="7%">
         {% for item in find %}
             {% if item.weekday == '日' %}
                 {% if item.daytime == '9,10' or item.daytime == '9,10,11' %}
-                    <td align="Center" rowspan="2" width="7%">{{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br></td>
-                {% else %}
-                    <td align="Center" width="7%">&nbsp;</td>
+                    {{ item.className }}<br>{{ item.classTime }}<br>{{ item.teacherName }}<br>{{ item.address }}<br>
                 {% endif %}
-            {% else %}
-                <td align="Center" width="7%">&nbsp;</td>
             {% endif %}
         {% endfor %}
+        </td>
+
     </tr>
 
-
     <tr>
-		<td>第10节</td><td align="Center">&nbsp;</td><td align="Center">&nbsp;</td><td class="noprint" align="Center">&nbsp;</td>
+		<td>第10节</td>
 	</tr>
     <tr>
-		<td>第11节</td><td align="Center">&nbsp;</td><td align="Center">&nbsp;</td><td class="noprint" align="Center">&nbsp;</td>
-	</tr>
+		<td>第11节</td>
+    </tr>
 </tbody></table>
 </body>
 </html>
