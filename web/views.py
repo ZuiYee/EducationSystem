@@ -55,17 +55,12 @@ def SelectClass(request, classCode, studentNum):
         theclass_endweek = re.findall('-(.*?)周}', theClass.classTime)[0]
         theclass_weekday = re.findall('周(.*?)第', theClass.classTime)[0]
         theclass_daytime = re.findall('第(.*?)节', theClass.classTime)[0]
-        print(theclass_beginweek)
-        print(theclass_endweek)
-        print(theclass_weekday)
-        print(theclass_daytime)
         for item in find:
             if theclass_weekday == item['weekday']:
                 if theclass_daytime == item['daytime']:
                     if int(item['beginweek']) <= int(theclass_beginweek) <= int(item['endweek']):
                         flag = 1
 
-        print(flag)
         if flag == 0:
             ClassTable.objects.create(
                 classCode=classCode,
@@ -136,19 +131,21 @@ def Myclass(request, usernum):
 
 def SearcherClass(request, classname, studentNum):
     context = {}
-    findPart = ClassTable.objects.filter(studentNum=studentNum).values_list('classCode', flat=True)
-    find = Class.objects.filter(~Q(classCode__in=findPart), className__icontains=classname).values()
-    print(find)
-    if find:
-        context['find'] = find
-        return render(request, 'web/selectclass.html', context)
+    if classname:
+        findPart = ClassTable.objects.filter(studentNum=studentNum).values_list('classCode', flat=True)
+        find = Class.objects.filter(~Q(classCode__in=findPart), className__icontains=classname).values()
+        if find:
+            context['find'] = find
+            return render(request, 'web/selectclass.html', context)
+        else:
+            return render(request, 'web/studentparseresult.html', {'Print': '没有数据!'})
     else:
-        return render(request, 'web/studentparseresult.html', {'Print': '没有数据!'})
+        return render(request, 'web/studentparseresult.html', {'Print': '请输入需要查询的课程!'})
 
 
 def studentProfile(request):
     if request.method == "POST":
-        if request.POST.get("s"):
+        if request.POST.get("s") or request.POST.get("searchname"):
             return SearcherClass(request, request.POST.get("s"), request.POST.get("searchname"))
         if request.POST.get("c"):
             return Myclass(request, request.POST.get("c"))
@@ -188,13 +185,23 @@ def UpdateGrade(request, teacherNum):
         find = ClassTable.objects.filter(teacherName=teacher[0].teacherName)
 
         if find:
+            realfind = {}
             for item in find:
-                gradeList = Grade.objects.filter(studentNum=item.studentNum)
+                realfind[item.className + '(' + item.classCode + ')'] = []
+
+            for item in find:
+                gradeList = Grade.objects.filter(studentNum=item.studentNum, classCode=item.classCode)
                 if gradeList:
                     item.Grade = gradeList[0].Grade
+                    realfind[item.className + '(' + item.classCode + ')'].append(item)
                 else:
-                    return render(request, 'web/teacherparseresult.html', {'Print': '没有数据!'})
+                    Grade.objects.create(studentNum=item.studentNum, classCode=item.classCode, Grade='等待填写')
+                    gradeList = Grade.objects.filter(studentNum=item.studentNum, classCode=item.classCode)
+                    item.Grade = gradeList[0].Grade
+                    realfind[item.className + '(' + item.classCode + ')'].append(item)
+                    # return render(request, 'web/teacherparseresult.html', {'Print': '没有数据!'})
             context['find'] = find
+            context['realfind'] = realfind
             return render(request, 'web/updateGrade.html', context)
         else:
             return render(request, 'web/teacherparseresult.html', {'Print': '没有数据!'})
@@ -206,6 +213,8 @@ def Update(request):
     if studentNum:
         classCode = request.POST.get("updateCode")
         grade = Grade.objects.filter(studentNum=studentNum, classCode=classCode)
+        for i in grade:
+            print(i)
         if grade:
             grade.update(Grade=request.POST.get("g"))
         else:
@@ -214,11 +223,34 @@ def Update(request):
     return render(request, 'web/teacherparseresult.html', {'Print': '没有数据!'})
 
 
+def teacherClass(request, teacherNum):
+    context = {}
+    teacher = Teacher.objects.filter(teacherNum=teacherNum)
+    if teacher:
+        teacherName = teacher[0].teacherName
+    findPart = ClassTable.objects.filter(teacherName=teacherName).values_list('classCode', flat=True)
+    find = Class.objects.filter(classCode__in=findPart).values()
+    for item in find:
+        if item['classTime']:
+            beginweek = re.findall('{第(.*?)-', item['classTime'])[0]
+            endweek = re.findall('-(.*?)周}', item['classTime'])[0]
+            weekday = re.findall('周(.*?)第', item['classTime'])[0]
+            daytime = re.findall('第(.*?)节', item['classTime'])[0]
+            item['beginweek'] = beginweek
+            item['endweek'] = endweek
+            item['weekday'] = weekday
+            item['daytime'] = daytime
 
+    context['find'] = find
+
+
+    return render(request, "web/teacherclass.html", context)
 
 
 def teacherProfile(request):
     if request.method == "POST":
+        if request.POST.get("b"):
+            return teacherClass(request, request.POST.get("b"))
         if request.POST.get("q"):
             return GetTeacherClassTable(request, request.POST.get("q"))
         if request.POST.get("c"):

@@ -8,7 +8,9 @@
 <div>
     <a href="{% url 'web:teacherProfile' %}">返回首页</a>
 </div>
-<table>
+{% for className,class in realfind.items %}
+<table border="1" width="100%">
+    <h3>{{ className }}</h3>
     <thead>
         <tr>
             <th>classCode</th>
@@ -17,26 +19,27 @@
             <th>grade</th>
         </tr>
     </thead>
-    <tbody>
-        {%  for item in find %}
-            <tr>
-                <td>{{ item.classCode }}</td>
-                <td>{{ item.className }}</td>
-                <td>{{ item.studentNum }}</td>
-                <form action="" method="post">
-                    {% csrf_token %}
-                    <td>
-                        <input type="text" name="g" value="{{ item.Grade }}"/>
-                    </td>
-                    <td>
-                        <input type="hidden" name="updateCode" value="{{ item.classCode }}"/>
-                        <input type="hidden" name="updateNum" value="{{ item.studentNum }}"/>
-                        <input type="submit" value="选择">
-                    </td>
-                </form>
-            </tr>
+     <tbody>
+        {%  for item in class %}
+            <form action="" method="post">
+                <tr>
+                    <td>{{ item.classCode }}</td>
+                    <td>{{ item.className }}</td>
+                    <td>{{ item.studentNum }}</td>
+                        {% csrf_token %}
+                        <td>
+                            <input type="text" name="g" value="{{ item.Grade }}"/>
+                        </td>
+                        <td>
+                            <input type="hidden" name="updateCode" value="{{ item.classCode }}"/>
+                            <input type="hidden" name="updateNum" value="{{ item.studentNum }}"/>
+                            <input type="submit" value="选择">
+                        </td>
+                </tr>
+            </form>
         {% endfor %}
     </tbody>
 </table>
+{% endfor %}
 </body>
 </html>
