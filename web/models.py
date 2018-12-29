@@ -1,4 +1,6 @@
 from django.db import models
+#Model
+
 
 class Class(models.Model):
     className = models.CharField(u'课程名', max_length=100, null=True, blank=True)
