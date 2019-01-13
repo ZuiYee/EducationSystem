@@ -240,7 +240,6 @@ def teacherClass(request, teacherNum):
             item['endweek'] = endweek
             item['weekday'] = weekday
             item['daytime'] = daytime
-
     context['find'] = find
 
 
