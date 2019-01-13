@@ -1,7 +1,8 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from .models import ClassTable, Class, Grade, Teacher, Student
 from django.db.models import Q
 import re
+
 
 def GetStudentClassTable(request, studentNum):
     context = {}
@@ -12,6 +13,7 @@ def GetStudentClassTable(request, studentNum):
         return render(request, 'web/classtable.html', context)
     else:
         return render(request, 'web/studentparseresult.html', {'Print': '没有数据!'})
+
 
 def SelectClassWeb(request, studentNum):
     context = {}
@@ -33,6 +35,7 @@ def DropClassWeb(request, studentNum):
         return render(request, 'web/dropclass.html', context)
     else:
         return render(request, 'web/studentparseresult.html', {'Print': '没有数据!'})
+
 
 def SelectClass(request, classCode, studentNum):
     theClass = Class.objects.filter(classCode=classCode)[0]
@@ -74,11 +77,13 @@ def SelectClass(request, classCode, studentNum):
     else:
         return render(request, 'web/studentparseresult.html', {'Print': '选课失败!课程不存在'})
 
+
 def DropClass(request, classCode, studentNum):
     ClassTable.objects.filter(classCode=classCode, studentNum=studentNum).delete()
     return render(request, 'web/studentparseresult.html', {'Print': '退课成功!'})
 
-def GetGrade(request ,studentNum):
+
+def GetGrade(request, studentNum):
     context = {}
     Num = Grade.objects.filter(studentNum=studentNum)
     if Num:
@@ -90,14 +95,15 @@ def GetGrade(request ,studentNum):
             return render(request, 'web/grade.html', context)
     return render(request, 'web/studentparseresult.html', {'Print': '没有数据!'})
 
+
 def Myclass(request, usernum):
     context = {}
     findPart = ClassTable.objects.filter(studentNum=usernum).values_list('classCode', flat=True)
     find = Class.objects.filter(classCode__in=findPart).values()
     for item in find:
         if item['classTime']:
-            beginweek = re.findall('{第(.*?)-',item['classTime'])[0]
-            endweek = re.findall('-(.*?)周}',item['classTime'])[0]
+            beginweek = re.findall('{第(.*?)-', item['classTime'])[0]
+            endweek = re.findall('-(.*?)周}', item['classTime'])[0]
             weekday = re.findall('周(.*?)第', item['classTime'])[0]
             daytime = re.findall('第(.*?)节', item['classTime'])[0]
             item['beginweek'] = beginweek
@@ -125,7 +131,7 @@ def Myclass(request, usernum):
     # print(realfind)
 
     # context['realfind'] = realfind
-    context['find'] =find
+    context['find'] = find
     return render(request, 'web/myclass.html', context)
 
 
@@ -162,12 +168,10 @@ def studentProfile(request):
         if request.POST.get("dropCode"):
             return DropClass(request, request.POST.get("dropCode"), request.POST.get("dropNum"))
 
-
     return render(request, 'web/studentProfile.html')
 
 
-
-def GetTeacherClassTable(request,teacherNum):
+def GetTeacherClassTable(request, teacherNum):
     context = {}
     teacher = Teacher.objects.filter(teacherNum=teacherNum)
     if teacher:
@@ -177,6 +181,7 @@ def GetTeacherClassTable(request,teacherNum):
             return render(request, 'web/classtable.html', context)
         else:
             return render(request, 'web/teacherparseresult.html', {'Print': '没有数据!'})
+
 
 def UpdateGrade(request, teacherNum):
     context = {}
@@ -207,6 +212,7 @@ def UpdateGrade(request, teacherNum):
             return render(request, 'web/teacherparseresult.html', {'Print': '没有数据!'})
     else:
         return render(request, 'web/teacherparseresult.html', {'Print': '没有数据!'})
+
 
 def Update(request):
     studentNum = request.POST.get("updateNum")
@@ -242,7 +248,6 @@ def teacherClass(request, teacherNum):
             item['daytime'] = daytime
     context['find'] = find
 
-
     return render(request, "web/teacherclass.html", context)
 
 
@@ -258,8 +263,10 @@ def teacherProfile(request):
             return Update(request)
     return render(request, 'web/teacherProfile.html')
 
+
 def studentparseresult(request):
     return render(request, 'web/studentparseresult.html')
+
 
 def teacherparseresult(request):
     return render(request, 'web/teacherparseresult.html')
